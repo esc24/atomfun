@@ -1,11 +1,8 @@
-jwttut
-======
+atomfun
+=======
 
-GET request to http://0.0.0.0:3001/secured/ping
+GET request to http://0.0.0.0:3001/ping
 
-with header (via postman):
-
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJlZCJ9.ELVoRHbVTv77CM7ShylFmlfbK4maI3N6P9wqhOFBcaM
 
 local install
 -------------
@@ -13,12 +10,23 @@ local install
 With conda:
 
     conda install flask flask-cors
-    pip install pyjwt dotenv
 
 Just pip:
 
     pip install -r requirements.txt
 
+
+Run:
+
+With flask 0.11 and later use:
+
+    export FLASK_APP=server.py
+    export FLASK_DEBUG=1 (optional)
+    flask run
+
+With earlier version just do:
+
+    python server.py
 
 docker
 ------

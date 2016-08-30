@@ -2,6 +2,7 @@
 Flask web app that exposes endpoints with an atom feed for notifications.
 
 """
+import datetime
 import mimetypes
 import os
 import os.path
@@ -10,7 +11,7 @@ import urlparse
 from feedgen.feed import FeedGenerator
 from flask import Flask, request, send_from_directory
 from flask_cors import cross_origin
-
+import tzlocal
 
 app = Flask(__name__)
 app.config['DATA_DIR'] = 'data'
@@ -54,6 +55,11 @@ def atom_feed():
         key = os.path.basename(filename)
         fe.id(key)
         fe.title(key)
+        tz = tzlocal.get_localzone()
+        ctime = datetime.datetime.fromtimestamp(os.path.getctime(filename))
+        fe.published(tz.localize(ctime))
+        mtime = datetime.datetime.fromtimestamp(os.path.getmtime(filename))
+        fe.updated(tz.localize(mtime))
         filesize = str(os.path.getsize(filename))
         mimetype, _ = mimetypes.guess_type(filename)
         # Construct link to resource (must be a better way to use flask route)
